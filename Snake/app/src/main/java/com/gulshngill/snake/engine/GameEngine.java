@@ -28,12 +28,14 @@ public class GameEngine {
     public TileType[][] getMap() {
         TileType[][] map = new TileType[GAME_WIDTH][GAME_HEIGHT];
 
+        //set all tiles to nothing
         for(int x = 0; x < GAME_WIDTH; x++) {
             for(int y = 0; y < GAME_HEIGHT; y++) {
                 map[x][y] = TileType.Nothing;
             }
         }
 
+        //add walls
         for (Coordinate wall: walls) {
             map[wall.getX()][wall.getY()] = TileType.Wall;
 
@@ -52,7 +54,7 @@ public class GameEngine {
         //add left/right walls
         for (int y = 0; y < GAME_HEIGHT; y++) {
             walls.add(new Coordinate(0,y));
-            walls.add(new Coordinate(GAME_WIDTH-1, 0));
+            walls.add(new Coordinate(GAME_WIDTH-1, y));
         }
     }
 }
