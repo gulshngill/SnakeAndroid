@@ -1,6 +1,9 @@
 package com.gulshngill.snake.engine;
 
+import android.graphics.Path;
+
 import com.gulshngill.snake.classes.Coordinate;
+import com.gulshngill.snake.enums.Direction;
 import com.gulshngill.snake.enums.TileType;
 
 import java.util.ArrayList;
@@ -15,14 +18,54 @@ public class GameEngine {
     public static final int GAME_HEIGHT = 42;
 
     private List<Coordinate> walls = new ArrayList<>();
+    private List<Coordinate> snake = new ArrayList<>();
 
+    private Direction currentDirection = Direction.East;
 
     public GameEngine() {
 
     }
 
     public void initGame() {
+
+        AddSnake();
         AddWalls();
+    }
+
+    public void Update() {
+        switch (currentDirection) {
+            case North:
+                UpdateSnake(0,-1);
+                break;
+            case East:
+                UpdateSnake(1,0);
+                break;
+            case South:
+                UpdateSnake(0,1);
+                break;
+            case West:
+                UpdateSnake(-1,0);
+                break;
+        }
+    }
+
+    private void UpdateSnake(int x, int y) {
+        for(int i = snake.size() -1; i>0; i--) {
+            snake.get(i).setX(snake.get(i-1).getX());
+            snake.get(i).setY(snake.get(i-1).getY());
+        }
+    }
+
+    private void AddSnake() {
+        snake.clear();
+
+        snake.add(new Coordinate(7,7));
+        snake.add(new Coordinate(6,7));
+        snake.add(new Coordinate(5,7));
+        snake.add(new Coordinate(4,7));
+        snake.add(new Coordinate(3,7));
+        snake.add(new Coordinate(2,7));
+
     }
 
     public TileType[][] getMap() {
