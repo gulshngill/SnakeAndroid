@@ -65,6 +65,10 @@ public class GameEngine {
             snake.get(i).setX(snake.get(i-1).getX());
             snake.get(i).setY(snake.get(i-1).getY());
         }
+
+        snake.get(0).setX( snake.get(0).getX() + x);
+        snake.get(0).setY(snake.get(0).getY() + y);
+
     }
 
     private void AddSnake() {
