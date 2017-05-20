@@ -89,6 +89,12 @@ public class GameEngine {
             }
         }
 
+        for(Coordinate s: snake) {
+            map[s.getX()][s.getY()] = TileType.SnakeTail;
+        }
+
+        map[snake.get(0).getX()][snake.get(0).getY()] = TileType.SnakeHead;
+
         //add walls
         for (Coordinate wall: walls) {
             map[wall.getX()][wall.getY()] = TileType.Wall;
