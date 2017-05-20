@@ -4,6 +4,7 @@ import android.graphics.Path;
 
 import com.gulshngill.snake.classes.Coordinate;
 import com.gulshngill.snake.enums.Direction;
+import com.gulshngill.snake.enums.GameState;
 import com.gulshngill.snake.enums.TileType;
 
 import java.util.ArrayList;
@@ -22,6 +23,8 @@ public class GameEngine {
 
     private Direction currentDirection = Direction.East;
 
+    private GameState currentStateGame = GameState.Running;
+
     public GameEngine() {
 
     }
@@ -33,6 +36,7 @@ public class GameEngine {
     }
 
     public void Update() {
+        //Update snake direction
         switch (currentDirection) {
             case North:
                 UpdateSnake(0,-1);
@@ -46,6 +50,13 @@ public class GameEngine {
             case West:
                 UpdateSnake(-1,0);
                 break;
+        }
+
+        //Check wall collision
+        for( Coordinate w: walls) {
+            if(snake.get(0).equals(w)) {
+                currentStateGame = GameState.Lost;
+            }
         }
     }
 
@@ -99,5 +110,9 @@ public class GameEngine {
             walls.add(new Coordinate(0,y));
             walls.add(new Coordinate(GAME_WIDTH-1, y));
         }
+    }
+
+    public GameState getCurrentGameState() {
+        return currentStateGame;
     }
 }
