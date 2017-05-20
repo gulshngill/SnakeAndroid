@@ -16,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
     private final Handler handler = new Handler();
     private final long updateDelay = 125;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,8 +27,9 @@ public class MainActivity extends AppCompatActivity {
         gameEnigne.initGame();
 
         snakeView = (SnakeView)findViewById(R.id.snakeView);
-        snakeView.setSnakeViewMap(gameEnigne.getMap());
-        snakeView.invalidate();
+
+
+        startUpdateHandler();
     }
 
     private void startUpdateHandler() {

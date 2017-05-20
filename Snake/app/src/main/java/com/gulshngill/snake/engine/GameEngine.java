@@ -35,6 +35,12 @@ public class GameEngine {
         AddWalls();
     }
 
+    public void UpdateDirection(Direction newDirection) {
+        if (Math.abs(newDirection.ordinal() - currentDirection.ordinal()) % 2 == 1) {
+            currentDirection = newDirection;
+        }
+    }
+
     public void Update() {
         //Update snake direction
         switch (currentDirection) {
