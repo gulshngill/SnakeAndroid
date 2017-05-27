@@ -9,6 +9,7 @@ import com.gulshngill.snake.enums.TileType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by gulsh on 20/5/2017.
@@ -20,10 +21,19 @@ public class GameEngine {
 
     private List<Coordinate> walls = new ArrayList<>();
     private List<Coordinate> snake = new ArrayList<>();
+    private List<Coordinate> food = new ArrayList<>();
+
+    private Random random = new Random();
+    private boolean increaseTail = false;
 
     private Direction currentDirection = Direction.East;
 
     private GameState currentStateGame = GameState.Running;
+
+    private Coordinate getSnakeHead() {
+        return snake.get(0);
+    }
+
 
     public GameEngine() {
 
@@ -33,6 +43,7 @@ public class GameEngine {
 
         AddSnake();
         AddWalls();
+        AddFood();
     }
 
     public void UpdateDirection(Direction newDirection) {
@@ -59,17 +70,49 @@ public class GameEngine {
         }
 
         //Check wall collision
-        for( Coordinate w: walls) {
+        for( Coordinate w : walls) {
             if(snake.get(0).equals(w)) {
                 currentStateGame = GameState.Lost;
             }
         }
+
+        //Check self-collision
+        for ( int i = 1; i < snake.size(); i++) {
+            if( getSnakeHead().equals(snake.get(i))) {
+                currentStateGame = GameState.Lost;
+                return;
+            }
+        }
+
+        //Check food
+        Coordinate foodToRemove = null;
+
+        for( Coordinate foods: food ) {
+            if( getSnakeHead().equals(foods)) {
+                foodToRemove = foods;
+                increaseTail = true;
+            }
+        }
+
+        if(foodToRemove != null) {
+            food.remove(foodToRemove);
+            AddFood();
+        }
+
     }
 
     private void UpdateSnake(int x, int y) {
+        int newX = snake.get(snake.size()-1).getX();
+        int newY = snake.get(snake.size()-1).getY();
+
         for(int i = snake.size() -1; i>0; i--) {
             snake.get(i).setX(snake.get(i-1).getX());
             snake.get(i).setY(snake.get(i-1).getY());
+        }
+
+        if(increaseTail) {
+            snake.add(new Coordinate(newX,newY));
+            increaseTail = false;
         }
 
         snake.get(0).setX( snake.get(0).getX() + x);
@@ -111,6 +154,10 @@ public class GameEngine {
 
         }
 
+        for(Coordinate f: food) {
+            map[f.getX()][f.getY()] = TileType.Food;
+        }
+
         return map;
     }
 
@@ -130,5 +177,44 @@ public class GameEngine {
 
     public GameState getCurrentGameState() {
         return currentStateGame;
+    }
+
+    private void AddFood() {
+        Coordinate coordinate = null;
+
+        boolean added = false;
+
+        while (!added) {
+            int x = 1 + random.nextInt(GAME_WIDTH - 2);
+            int y = 1 + random.nextInt(GAME_HEIGHT - 2);
+
+            coordinate = new Coordinate(x,y);
+            boolean collision = false;
+            for(Coordinate s: snake) {
+                if( s.equals(coordinate)) {
+                    collision = true;
+                    //break;
+                }
+            }
+
+            for(Coordinate f: food) {
+                if( f.equals(coordinate) ) {
+                    collision = true;
+                    //break;
+                }
+            }
+
+            for(Coordinate s: snake) {
+                if( s.equals(coordinate) ) {
+                    collision = true;
+                    //break;
+                }
+            }
+
+            added = !collision;
+        }
+
+        food.add(coordinate);
+
     }
 }
