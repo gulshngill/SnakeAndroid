@@ -1,4 +1,5 @@
 # SnakeAndroid
 Simple Snake Game for Android
 
-![screenshot_1495870758](https://cloud.githubusercontent.com/assets/9363173/26519646/9cabb35e-42f7-11e7-889b-9d2b84279da8.png)
+![screenshot_1495870758](https://cloud.githubusercontent.com/assets/9363173/26519754/6cee9ebe-42f8-11e7-9e60-61b489f4aebc.png)
+
