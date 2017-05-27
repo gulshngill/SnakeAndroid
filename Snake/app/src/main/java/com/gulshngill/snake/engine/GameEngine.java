@@ -19,6 +19,8 @@ public class GameEngine {
     public static final int GAME_WIDTH = 28;
     public static final int GAME_HEIGHT = 42;
 
+    private int score = 0;
+
     private List<Coordinate> walls = new ArrayList<>();
     private List<Coordinate> snake = new ArrayList<>();
     private List<Coordinate> food = new ArrayList<>();
@@ -37,6 +39,10 @@ public class GameEngine {
 
     public GameEngine() {
 
+    }
+
+    public int getScore() {
+        return score;
     }
 
     public void initGame() {
@@ -91,6 +97,7 @@ public class GameEngine {
             if( getSnakeHead().equals(foods)) {
                 foodToRemove = foods;
                 increaseTail = true;
+                score +=1;
             }
         }
 

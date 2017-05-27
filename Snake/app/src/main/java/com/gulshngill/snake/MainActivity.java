@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     }
 
     private void OnGameLost(){
-        Toast.makeText(this, "Game Over", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Game Over.\nScore: " + gameEnigne.getScore(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
